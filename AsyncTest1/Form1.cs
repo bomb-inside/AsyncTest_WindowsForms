@@ -32,24 +32,21 @@ namespace AsyncTest1
         {
             var task1 = Task.Run(() => LongCalAsync(10));
 
-            label3.Text = "진행중!";
+            await task1;
 
-            int sum = await task1;
-
-            label1.Text = "Sum = " + sum;
-            button1.Enabled = true;
+            button1.Enabled = true; // don't know why exists
         }
 
-        private int LongCalAsync(int times)
+        private void LongCalAsync(int times)
         {
             int result = 0;
             for (int i=0; i<times; i++)
             {
                 result += i;
-                Thread.Sleep(1000);
-                //Task.Delay(1000);
+                Thread.Sleep(1000); // wait for 10seconds and resume
+                //Task.Delay(1000); // 
             }
-            return result;
+            label3.Text = result.ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
