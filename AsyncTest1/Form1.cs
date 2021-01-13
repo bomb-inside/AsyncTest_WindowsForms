@@ -25,34 +25,50 @@ namespace AsyncTest1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            label1.Text = "label1";
+            label2.Text = "label2";
+            label3.Text = "label3";
             Run();
         }
         
         private async void Run()
         {
-            var task1 = Task.Run(() => LongCalAsync(10));
+            var task1 = Task.Run(() => IntCalAsync(10));
+            var task2 = Task.Run(() => VoidCalAsync(2)); 
 
-            await task1;
+            int sum = await task1;
 
+            label1.Text = "Sum = " + sum;
             button1.Enabled = true; // don't know why exists
         }
 
-        private void LongCalAsync(int times)
+        private int IntCalAsync(int times)
         {
             int result = 0;
             for (int i=0; i<times; i++)
             {
                 result += i;
                 Thread.Sleep(1000); // wait for 10seconds and resume
-                //Task.Delay(1000); // 
+                //Task.Delay(1000); // don't know why
             }
-            label3.Text = result.ToString();
+            return result;
+        }
+
+        private void VoidCalAsync(int times)
+        {
+            int result = 0;
+            for (int i=0;i<times;i++)
+            {
+                result += i;
+                Thread.Sleep(1000);
+            }
+            label2.Text = result.ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (label2.Text == "a") label2.Text = "b";
-            else label2.Text = "a";
+            if (label3.Text == "a") label3.Text = "b";
+            else label3.Text = "a";
         }
     }
 }
